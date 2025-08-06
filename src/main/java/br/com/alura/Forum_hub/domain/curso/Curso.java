@@ -19,6 +19,8 @@ public class Curso {
     private String categoria;
 
     public Curso(DadosDoCurso dados) {
-
+        this.id = dados.id();
+        this.nome = dados.nome();
+        this.categoria = dados.categoria();
     }
 }
