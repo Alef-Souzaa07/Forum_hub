@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "cursos")
+@Embeddable
 @Getter
-@Setter
 @NoArgsConstructor      // necessário para o JPA
 @AllArgsConstructor     // útil para testes, DTOs ou criação manual
 public class Curso {

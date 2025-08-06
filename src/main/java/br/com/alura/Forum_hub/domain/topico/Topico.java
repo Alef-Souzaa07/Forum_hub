@@ -30,8 +30,7 @@ public class Topico {
 
     private String autor;
 
-    @ManyToOne
-    @JoinColumn(name = "curso_id")
+    @Embedded
     private Curso curso;
 
     public Topico(DadosRegistroTopico dados) {
