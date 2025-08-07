@@ -15,12 +15,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .requestMatchers("/topicos").permitAll() // libera apenas /topicos
+                        //.requestMatchers("/**").permitAll()    // se quiser liberar tudo
+                        .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults()) // forma recomendada agora
-                .csrf(csrf -> csrf.disable());        // forma recomendada agora
+                .csrf(csrf -> csrf.disable()); // necessário para POST sem token CSRF
 
         return http.build();
     }
 }
+
 
