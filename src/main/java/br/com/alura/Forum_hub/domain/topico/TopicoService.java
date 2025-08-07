@@ -1,5 +1,6 @@
 package br.com.alura.Forum_hub.domain.topico;
 
+import br.com.alura.Forum_hub.error.excecoes.RegistroDuplicadoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +15,10 @@ public class TopicoService {
     public void registrarTopico(DadosRegistroTopico dados) {
         boolean exists = repository.existsByTituloAndMensagem(dados.titulo(), dados.mensagem());
         if (exists) {
-            throw new IllegalArgumentException("Já existe um tópico com o mesmo título e mensagem.");
+            throw new RegistroDuplicadoException("Esse registro de título e mensagem já existe");
         }
         repository.save(new Topico(dados));
     }
 }
+
 
