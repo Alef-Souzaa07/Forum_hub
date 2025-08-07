@@ -21,7 +21,7 @@ public class TopicoController {
 
     @PostMapping
     @Transactional
-    public void RegistrarTopico(@RequestBody DadosRegistroTopico dados){
+    public void RegistrarTopico(@RequestBody @Valid DadosRegistroTopico dados){
         respository.save(new Topico(dados));
     }
 }
