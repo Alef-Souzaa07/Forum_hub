@@ -7,4 +7,6 @@ create table topicos(
     autor varchar(100),
     nome varchar(100),
     categoria varchar(255)
+
+    primary key (id)
 );
