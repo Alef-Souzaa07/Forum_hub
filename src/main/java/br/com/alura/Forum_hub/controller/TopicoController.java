@@ -3,6 +3,7 @@ package br.com.alura.Forum_hub.controller;
 import br.com.alura.Forum_hub.domain.topico.DadosRegistroTopico;
 import br.com.alura.Forum_hub.domain.topico.Topico;
 import br.com.alura.Forum_hub.domain.topico.TopicoRespository;
+import br.com.alura.Forum_hub.domain.topico.TopicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TopicoController {
 
     @Autowired
-    private TopicoRespository respository;
+    private TopicoService topicoService;
 
     @PostMapping
     @Transactional
-    public void RegistrarTopico(@RequestBody @Valid DadosRegistroTopico dados){
-        respository.save(new Topico(dados));
+    public void registrarTopico(@RequestBody @Valid DadosRegistroTopico dados){
+        topicoService.registrarTopico(dados);
     }
 }
