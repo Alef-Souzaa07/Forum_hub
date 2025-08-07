@@ -1,6 +1,7 @@
 package br.com.alura.Forum_hub.domain.topico;
 
 import br.com.alura.Forum_hub.domain.curso.Curso;
+import br.com.alura.Forum_hub.domain.curso.DadosDoCurso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -39,7 +40,7 @@ public class Topico {
         this.data = dados.data();
         this.status = dados.status();
         this.autor = dados.autor();
-        this.curso = dados.curso();
+        this.curso = new Curso(dados.curso());
 
     }
 
