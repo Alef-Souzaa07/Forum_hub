@@ -11,15 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor      // necessário para o JPA
 @AllArgsConstructor     // útil para testes, DTOs ou criação manual
 public class Curso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String nome;
     private String categoria;
 
     public Curso(DadosDoCurso dados) {
-        this.id = dados.id();
         this.nome = dados.nome();
         this.categoria = dados.categoria();
     }

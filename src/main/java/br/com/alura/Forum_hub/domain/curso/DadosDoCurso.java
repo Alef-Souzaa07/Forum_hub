@@ -1,3 +1,3 @@
 package br.com.alura.Forum_hub.domain.curso;
 
-public record DadosDoCurso(Long id, String nome, String categoria) {}
+public record DadosDoCurso(String nome, String categoria) {}
