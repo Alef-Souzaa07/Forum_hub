@@ -6,6 +6,7 @@ import br.com.alura.Forum_hub.domain.topico.TopicoRespository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class TopicoController {
     private TopicoRespository respository;
 
     @PostMapping
+    @Transactional
     public void RegistrarTopico(@RequestBody DadosRegistroTopico dados){
         respository.save(new Topico(dados));
     }

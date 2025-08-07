@@ -2,6 +2,7 @@ package br.com.alura.Forum_hub.domain.topico;
 
 import br.com.alura.Forum_hub.domain.curso.Curso;
 import br.com.alura.Forum_hub.domain.curso.DadosDoCurso;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,8 @@ public class Topico {
 
     private String titulo;
     private String mensagem;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime data;
 
     @Enumerated(EnumType.STRING)
