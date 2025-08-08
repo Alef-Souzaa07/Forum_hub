@@ -4,7 +4,9 @@ import br.com.alura.Forum_hub.domain.topico.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,16 @@ public class TopicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemTopicos> listarTopicos(Pageable paginacao){
-        return topicoRespository.findAll(paginacao).map(DadosListagemTopicos::new);
+    public Page<DadosListagemTopicos> listarTopicos(Pageable paginacao) {
+        Pageable pageableOrdenado = PageRequest.of(
+                paginacao.getPageNumber(),
+                10,
+                //paginacao.getPageSize(),
+                Sort.by("data").ascending()
+        );
+
+        return topicoRespository.findAll(pageableOrdenado)
+                .map(DadosListagemTopicos::new);
     }
+
 }
