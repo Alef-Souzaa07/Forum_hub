@@ -43,4 +43,9 @@ public class TopicoController {
                 .map(DadosListagemTopicos::new);
     }
 
+    @GetMapping("/{id}")
+    public List<DadosDetalhamentoTopico> detalharTopico(@PathVariable Long id){
+
+    }
+
 }
