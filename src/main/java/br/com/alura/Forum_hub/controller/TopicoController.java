@@ -8,10 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/topicos")
 public class TopicoController {
+
+    @Autowired
+    private TopicoRespository topicoRespository;
 
     @Autowired
     private TopicoService topicoService;
@@ -24,6 +28,6 @@ public class TopicoController {
 
     @GetMapping
     public List<DadosListagemTopicos> listarTopicos(){
-
+        return topicoRespository.findAll().stream().map(DadosListagemTopicos::new).toList();
     }
 }
