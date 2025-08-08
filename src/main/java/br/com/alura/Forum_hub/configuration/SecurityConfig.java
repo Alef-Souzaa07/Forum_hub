@@ -2,6 +2,7 @@ package br.com.alura.Forum_hub.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +18,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/topicos").permitAll() // libera apenas /topicos
+                        .requestMatchers(HttpMethod.GET,"/topicos/**").permitAll() // libera apenas /topicos
                         //.requestMatchers("/**").permitAll()    // se quiser liberar tudo
                         .anyRequest().authenticated()
                 )

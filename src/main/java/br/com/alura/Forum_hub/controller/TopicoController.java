@@ -44,8 +44,11 @@ public class TopicoController {
     }
 
     @GetMapping("/{id}")
-    public List<DadosDetalhamentoTopico> detalharTopico(@PathVariable Long id){
-
+    public ResponseEntity<DadosDetalhamentoTopico> detalharTopico(@PathVariable Long id) {
+        return topicoRespository.findById(id)
+                .map(topico -> ResponseEntity.ok(new DadosDetalhamentoTopico(topico)))
+                .orElse(ResponseEntity.notFound().build());
     }
+
 
 }
