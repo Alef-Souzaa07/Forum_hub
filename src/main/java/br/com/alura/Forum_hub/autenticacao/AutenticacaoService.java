@@ -1,5 +1,7 @@
-package br.com.alura.Forum_hub.domain.usuario;
+package br.com.alura.Forum_hub.autenticacao;
 
+import br.com.alura.Forum_hub.domain.usuario.Usuario;
+import br.com.alura.Forum_hub.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
