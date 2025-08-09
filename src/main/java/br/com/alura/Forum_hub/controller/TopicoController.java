@@ -65,6 +65,18 @@ public class TopicoController {
         return ResponseEntity.ok(topicoAtualizado);
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> excluirTopico(@PathVariable Long id) {
+        var topico = topicoRespository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"
+                ));
+
+        topicoRespository.delete(topico);
+
+        return ResponseEntity.noContent().build(); // HTTP 204 (sem corpo)
+    }
 
 
 
