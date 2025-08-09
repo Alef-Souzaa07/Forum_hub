@@ -1,5 +1,6 @@
 package br.com.alura.Forum_hub.controller;
 
+import br.com.alura.Forum_hub.autenticacao.DadosLogin;
 import br.com.alura.Forum_hub.autenticacao.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
