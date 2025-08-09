@@ -53,5 +53,4 @@ public class Topico {
         if (dados.curso() != null) this.curso = dados.curso();
         // Data não é alterada
     }
-
 }

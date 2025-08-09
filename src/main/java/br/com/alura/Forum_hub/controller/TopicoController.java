@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,63 +23,49 @@ import java.util.stream.Collectors;
 public class TopicoController {
 
     @Autowired
-    private TopicoRespository topicoRespository;
+    private TopicoService service;
 
-    @Autowired
-    private TopicoService topicoService;
-
-    @PostMapping
-    @Transactional
-    public void registrarTopico(@RequestBody @Valid DadosRegistroTopico dados){
-        topicoService.registrarTopico(dados);
-    }
-
+    // GET
     @GetMapping
-    public Page<DadosListagemTopicos> listarTopicos(Pageable paginacao) {
-        Pageable pageableOrdenado = PageRequest.of(
-                paginacao.getPageNumber(),
-                10,
-                //paginacao.getPageSize(),
-                Sort.by("data").ascending()
-        );
-
-        return topicoRespository.findAll(pageableOrdenado)
-                .map(DadosListagemTopicos::new);
+    public ResponseEntity<List<Topico>> listarTodos() {
+        List<Topico> topicos = service.listarTodos();
+        return ResponseEntity.ok(topicos);
     }
 
+    // GET PARA DETALHAR
     @GetMapping("/{id}")
-    public ResponseEntity<DadosDetalhamentoTopico> detalharTopico(@PathVariable Long id) {
-        var topico = topicoRespository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"
-                ));
-
-        return ResponseEntity.ok(new DadosDetalhamentoTopico(topico));
+    public ResponseEntity<DadosDetalhamentoTopico> detalhar(@PathVariable Long id) {
+        DadosDetalhamentoTopico detalhes = service.DetalharTopico(id);
+        return ResponseEntity.ok(detalhes);
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DadosDetalhamentoTopico> atualizarTopico(
-            @PathVariable Long id,
-            @RequestBody @Valid DadosAtualizacaoTopico dados) {
 
-        var topicoAtualizado = topicoService.atualizarTopico(id, dados);
+    //POST
+    @PostMapping
+    public ResponseEntity<Topico> criar(@RequestBody @Valid DadosRegistroTopico dados) {
+        Topico topicoCriado = service.criarTopico(dados);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(topicoCriado.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(topicoCriado);
+    }
+
+
+    // PUT /topicos/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Topico> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoTopico dados) {
+        Topico topicoAtualizado = service.atualizarTopico(id, dados);
         return ResponseEntity.ok(topicoAtualizado);
     }
 
+    // DELETE /topicos/{id}
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<Void> excluirTopico(@PathVariable Long id) {
-        var topico = topicoRespository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"
-                ));
-
-        topicoRespository.delete(topico);
-
-        return ResponseEntity.noContent().build(); // HTTP 204 (sem corpo)
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletarTopico(id);
+        return ResponseEntity.noContent().build();
     }
-
-
-
 }
+

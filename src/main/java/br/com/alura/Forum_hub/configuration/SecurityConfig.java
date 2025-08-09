@@ -18,19 +18,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET,"/topicos/**").permitAll() // libera apenas /topicos
-                        //.requestMatchers("/**").permitAll()    // se quiser liberar tudo
-                        .requestMatchers(HttpMethod.PUT,"/topicos/**").permitAll()
-                        //Libera PUT em /topicos/{id} (atualizar)
-                        .requestMatchers(POST,"/topicos").permitAll()
-                        // Libera POST em /topicos (registrar)
-                        .requestMatchers(HttpMethod.DELETE,"/topicos/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/topicos/**").permitAll()
+                        .anyRequest().authenticated() // Opcional, se quiser bloquear outras rotas
                 )
-                .csrf(csrf -> csrf.disable()); // necessário para POST sem token CSRF
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
 }
+
 
 
