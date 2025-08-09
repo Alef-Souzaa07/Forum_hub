@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,10 +47,14 @@ public class TopicoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoTopico> detalharTopico(@PathVariable Long id) {
-        return topicoRespository.findById(id)
-                .map(topico -> ResponseEntity.ok(new DadosDetalhamentoTopico(topico)))
-                .orElse(ResponseEntity.notFound().build());
+        var topico = topicoRespository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"
+                ));
+
+        return ResponseEntity.ok(new DadosDetalhamentoTopico(topico));
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoTopico> atualizarTopico(

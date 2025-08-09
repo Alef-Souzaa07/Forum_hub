@@ -24,16 +24,14 @@ public class TopicoService {
 
     @Transactional
     public DadosDetalhamentoTopico atualizarTopico(Long id, DadosAtualizacaoTopico dados) {
-
-        var topico = topicoRespository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"
-                ));
+        Topico topico = topicoRespository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico com ID " + id + " não encontrado"));
 
         topico.atualizarInformacoes(dados);
 
         return new DadosDetalhamentoTopico(topico);
     }
+
 }
 
 
