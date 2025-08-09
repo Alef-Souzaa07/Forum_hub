@@ -20,6 +20,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET,"/topicos/**").permitAll() // libera apenas /topicos
                         //.requestMatchers("/**").permitAll()    // se quiser liberar tudo
+                        .requestMatchers(HttpMethod.PUT,"/topicos/**").permitAll()
+                        //Libera PUT em /topicos/{id} (atualizar)
+                        .requestMatchers(POST,"/topicos").permitAll()
+                        // Libera POST em /topicos (registrar)
+                        .requestMatchers(HttpMethod.DELETE,"/topicos/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()); // necessário para POST sem token CSRF
