@@ -4,16 +4,14 @@ import br.com.alura.Forum_hub.domain.curso.Curso;
 import br.com.alura.Forum_hub.domain.curso.DadosDoCurso;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Table(name = "topicos")
 @Entity(name = "Topico")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -45,6 +43,15 @@ public class Topico {
         this.autor = dados.autor();
         this.curso = new Curso(dados.curso());
 
+    }
+
+    public void atualizarInformacoes(DadosAtualizacaoTopico dados) {
+        if (dados.titulo() != null) this.titulo = dados.titulo();
+        if (dados.mensagem() != null) this.mensagem = dados.mensagem();
+        if (dados.status() != null) this.status = dados.status();
+        if (dados.autor() != null) this.autor = dados.autor();
+        if (dados.curso() != null) this.curso = dados.curso();
+        // Data não é alterada
     }
 
 }
